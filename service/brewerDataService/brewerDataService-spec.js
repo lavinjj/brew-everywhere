@@ -1,3 +1,4 @@
+/* global spyOn */
 describe('brewerDataService', function() {
   var rootScope = null;
   var service = null;

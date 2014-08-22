@@ -1,3 +1,4 @@
+/* global spyOn */
 describe('adjunctDataService', function () {
   var rootScope = null;
   var service = null;

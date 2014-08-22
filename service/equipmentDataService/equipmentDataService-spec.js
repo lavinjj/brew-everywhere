@@ -1,3 +1,4 @@
+/* global spyOn */
 describe('equipmentDataService', function() {
   var rootScope = null;
   var service = null;
