@@ -1,0 +1,18 @@
+<div class="col-md-12" ng-controller="PreheatboilCtrl">
+    <form class="form-horizontal" name="startBrewingForm">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Bring Wort to Boil</legend>
+            <div class="row">
+                <p>Press the button below when the wort starts to boil</p>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="form-group">
+                <div class="col-xs-7">
+                    <button ng-click="onTemperatureReached()" class="btn btn-lg btn-block btn-success">Temperature Reached</button>
+                    <button ng-click="onCancel()" class="btn btn-lg btn-block btn-warning">Cancel</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

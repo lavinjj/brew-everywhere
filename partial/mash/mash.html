@@ -1,0 +1,33 @@
+<div class="col-md-12" ng-controller="MashCtrl">
+    <form class="form-horizontal" name="startBrewingForm">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Mash Grains</legend>
+            <div class="row" ng-show="addGrain">
+                <div>Add the following grains to the mash water:</div>
+                <div>&nbsp;</div>
+                <div ng-repeat="grain in currentRecipe.Fermentables">
+                    <span>{{grain.Amount}} lbs. of {{grain.Name}}</span>
+                </div>
+                <div>&nbsp;</div>
+                <div>Ensure the grains are thoroughly mixed with the mash water and click the Grain Added button below.</div>
+            </div>
+            <div class="row" ng-show="waitTemperature">
+                <p>Press the button below when the temperature of the mash water reaches
+                    {{currentMashStep.EndTemperature}}</p>
+            </div>
+            <div class="row" ng-show="waitTime">
+                <p>Press the button below after {{currentMashStep.StepTime}} minutes.</p>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="form-group">
+                <div class="col-xs-7">
+                    <button ng-click="onGrainAdded()" class="btn btn-lg btn-block btn-success" ng-show="addGrain">Grain Added</button>
+                    <button ng-click="onStepTemperatureReached()" class="btn btn-lg btn-block btn-success" ng-show="waitTemperature">Temperature Reached</button>
+                    <button ng-click="onTimeReached()" class="btn btn-lg btn-block btn-success" ng-show="waitTime">Time Reached</button>
+                    <button ng-click="onCancel()" class="btn btn-lg btn-block btn-warning">Cancel</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,59 @@
+<div class="col-md-12" ng-controller="SchedulebrewdayCtrl">
+    <form class="form-horizontal" name="scheduleBrewDayForm">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Schedule Brew Day</legend>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="brewDate">Brew Date</label>
+
+                    <div class="col-md-6">
+                        <p class="input-group">
+                            <input id="brewDate" name="brewDate" type="text" class="form-control" datepicker-popup="{{format}}"
+                                   ng-model="dt" is-open="opened"
+                                   min-date="minDate" max-date="'2020-12-31'" datepicker-options="dateOptions"
+                                   ng-required="true" close-text="Close"/>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i
+                        class="fa fa-calendar"></i></button>
+              </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="selectRecipe">Recipe</label>
+
+                    <div class="col-xs-4">
+                        <select id="selectRecipe" name="selectRecipe" class="form-control"
+                                ng-options="recipe.Name for recipe in recipes"
+                                ng-model="currentRecipe" required >
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xs-offset-2 checkbox">
+                    <label>
+                        <input name="addBrewDayTasks" type="checkbox" ng-model="addBrewDayTasks"> Add Brew Day Tasks
+                    </label>
+                </div>
+                <div class="col-xs-offset-2 checkbox">
+                    <label>
+                        <input name="addFermentationTasks" type="checkbox" ng-model="addFermentationTasks"> Add Fermentation Tasks
+                    </label>
+                </div>
+                <div class="col-xs-offset-2 checkbox">
+                    <label>
+                        <input name="addConditioningTasks" type="checkbox" ng-model="addConditioningTasks"> Add Conditioning Tasks
+                    </label>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="col-xs-7 pull-right">
+                    <button ng-click="onAddBrewDay()" class="btn btn-success" ng-disabled="scheduleBrewDayForm.$invalid">Schedule</button>
+                    <button ng-click="onCancel()" class="btn btn-warning">Cancel</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>

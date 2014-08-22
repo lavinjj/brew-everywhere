@@ -1,0 +1,27 @@
+<div ng-controller="LoginCtrl">
+  <div class="container">
+    <div class="login-container">
+      <div id="output">
+        <div class="alert-danger" ng-show="loginForm.username.$invalid && loginForm.$dirty">You must enter a username
+        </div>
+        <div class="alert-danger" ng-show="loginForm.password.$invalid && loginForm.$dirty">You must enter a password
+        </div>
+      </div>
+      <div class="avatar"></div>
+      <div class="form-box">
+        <form method="post" ng-submit="login()" name="loginForm">
+          <input name="username" type="text" placeholder="username" ng-model="username" required>
+          <input name="password" type="password" placeholder="password" ng-model="password" required>
+          <button class="btn btn-info btn-block login" type="submit" ng-disabled="loginForm.$invalid">Login</button>
+            <a href="#/register" class="btn btn-info btn-block login" >Register</a>
+        </form>
+      </div>
+      <div class="form-box">
+        <div>Login in with</div>
+        <div><img src="img/Red-signin-Small-base-44dp.png" alt="log in with google+"
+                  ng-click="loginWithGooglePlus()"/></div>
+      </div>
+    </div>
+  </div>
+</div>
+

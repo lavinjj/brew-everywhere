@@ -1,0 +1,23 @@
+<div class="col-md-12" ng-controller="MashoutCtrl">
+    <form class="form-horizontal" name="startBrewingForm">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Mash Out Grains</legend>
+            <div class="row" ng-show="waitTemperature">
+                <p>Press the button below when the temperature of the mash water reaches
+                    {{currentMashStep.EndTemperature}}</p>
+            </div>
+            <div class="row" ng-show="waitTime">
+                <p>Press the button below after {{currentMashStep.StepTime}} minutes.</p>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="form-group">
+                <div class="col-xs-7">
+                    <button ng-click="onStepTemperatureReached()" class="btn btn-lg btn-block btn-success" ng-show="waitTemperature">Temperature Reached</button>
+                    <button ng-click="onTimeReached()" class="btn btn-lg btn-block btn-success" ng-show="waitTime">Time Reached</button>
+                    <button ng-click="onCancel()" class="btn btn-lg btn-block btn-warning">Cancel</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

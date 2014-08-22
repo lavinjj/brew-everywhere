@@ -1,0 +1,49 @@
+<div class="col-md-12" ng-controller="HomeCtrl">
+    <div class="row">
+        <h4>
+            Your Brewing Collection
+        </h4>
+        <div class="col-md-4">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <h4 class="text-center">
+                        Your Recipes</h4>
+                </div>
+                <ul class="list-group list-group-flush text-center">
+                    <li class="list-group-item" ng-repeat="recipe in recipes"><i class="icon-ok text-danger"></i><sapn>{{recipe.Name}}</sapn>&nbsp;<a href="#/recipe/{{recipe._id.$oid}}"><span class="fa fa-edit"></span></a></li>
+                </ul>
+                <div class="panel-footer">
+                    <a class="btn btn-lg btn-block btn-danger" href="#/recipe">Add Recipe</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" ng-show="isGooglePlusUser">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="text-center">
+                        Your Calendar</h4>
+                </div>
+                <ul class="list-group list-group-flush text-center">
+                    <li class="list-group-item" ng-repeat="brewEvent in brewingEvents"><i class="icon-ok text-danger"></i><span>{{brewEvent.summary}}</span>&nbsp;<span>Starts: {{brewEvent.start.date}}</span>&nbsp;<span>Ends: {{brewEvent.end.date}}</span></li>
+                </ul>
+                <div class="panel-footer">
+                    <a class="btn btn-lg btn-block btn-info" href="#/schedulebrewday">Add Brew Day</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h4 class="text-center">
+                        Your Tasks</h4>
+                </div>
+                <ul class="list-group list-group-flush text-center">
+                    <li class="list-group-item" ng-repeat="item in brewingTasks"><i class="icon-ok text-danger"></i><span>{{item.title}}</span>&nbsp;<span>Starts: {{item.start.date}}</span>&nbsp;<span>Ends: {{item.end.date}}</span></li>
+                </ul>
+                <div class="panel-footer">
+                    <a class="btn btn-lg btn-block btn-success" href="#/startbrewing">Brew Now!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="col-md-12" ng-controller="BoilCtrl">
+    <form class="form-horizontal" name="startBrewingForm">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Boil the Wort</legend>
+            <div class="row">
+                <p>Press the button below after boiling the wort for {{currentRecipe.BoilTime}} minutes.</p>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="form-group">
+                <div class="col-xs-7">
+                    <button ng-click="onTimeReached()" class="btn btn-lg btn-block btn-success">Time Reached</button>
+                    <button ng-click="onCancel()" class="btn btn-lg btn-block btn-warning">Cancel</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,779 @@
+<div class="col-xs-12" ng-controller="RecipeCtrl">
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Recipe {{currentRecipe.Name}}</legend>
+<tabset>
+<tab heading="Details">
+<div>&nbsp;</div>
+<div class="col-xs-6">
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="recipeName">Name</label>
+
+        <div class="col-xs-4">
+            <input id="recipeName" name="recipeName" type="text" class="form-control" required=""
+                   ng-model="currentRecipe.Name">
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="textBrewer">Brewer</label>
+
+        <div class="col-xs-4">
+            <input id="textBrewer" name="textBrewer" type="text" class="form-control" required=""
+                   ng-model="currentRecipe.BrewerName">
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="selectStyle">Style</label>
+
+        <div class="col-xs-4">
+            <select id="selectStyle" name="selectStyle" class="form-control"
+                    ng-options="style._id.$oid as style.Name for style in styles"
+                    ng-model="currentRecipe.Style" ng-change="onStyleChanged()">
+            </select>
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="selectUnits">Units</label>
+
+        <div class="col-xs-4">
+            <select id="selectUnits" name="selectUnits" class="form-control" ng-model="currentRecipe.Units">
+                <option value="us">US - (Gallons, lb, oz)</option>
+                <option value="metric">Metric - (Liters, kg, g)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="selectMethod">Method</label>
+
+        <div class="col-xs-4">
+            <select id="selectMethod" name="selectMethod" class="form-control" ng-model="currentRecipe.Type">
+                <option value="All Grain">All Grain</option>
+                <option value="BIAB">BIAB</option>
+                <option value="Extract">Extract</option>
+                <option value="Partial Mash">Partial Mash</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Appended Input-->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="textBatchSize">Batch Size</label>
+
+        <div class="col-xs-4">
+            <div class="input-group">
+                <input id="textBatchSize" name="textBatchSize" class="form-control" type="tel" required=""
+                       ng-model="currentRecipe.BatchSize">
+                <span class="input-group-addon">gallons</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appended Input-->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="textEstimatedBoilSize">Est. Boil Volume</label>
+
+        <div class="col-xs-4">
+            <div class="input-group">
+                <input id="textEstimatedBoilSize" name="textEstimatedBoilSize" class="form-control" type="tel"
+                       ng-model="currentRecipe.BoilSize">
+                <span class="input-group-addon">gallons</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appended Input-->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="textBoilTime">Boil Time</label>
+
+        <div class="col-xs-4">
+            <div class="input-group">
+                <input id="textBoilTime" name="textBoilTime" class="form-control" type="tel" required=""
+                       ng-model="currentRecipe.BoilTime">
+                <span class="input-group-addon">minutes</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appended Input-->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="textEfficiency">Efficiency</label>
+
+        <div class="col-xs-4">
+            <div class="input-group">
+                <input id="textEfficiency" name="textEfficiency" class="form-control" type="tel" required=""
+                       ng-model="currentRecipe.BrewHouseEfficiency">
+                <span class="input-group-addon">% (Brew House)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="selectStyle">Equipment</label>
+
+        <div class="col-xs-4">
+            <select id="selectEquipment" name="selectEquipment" class="form-control" ng-model="currentRecipe.Equipment"
+                    ng-options="item._id.$oid as item.Name for item in equipment">
+            </select>
+        </div>
+    </div>
+</div>
+<div class="col-xs-6">
+    <div class="form-group">
+        <div class="col-xs-2">
+            &nbsp;
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">Style</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">Recipe</span>
+        </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+        <div class="col-xs-2">
+            <span class="label label-default">Original Gravity</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{selectedStyle.OGMin}}-{{selectedStyle.OGMax}}</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{currentRecipe.estimatedOriginalGravity().toFixed(3)}}</span>
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <div class="col-xs-2">
+            <span class="label label-default">Final Gravity</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{selectedStyle.FGMin}}-{{selectedStyle.FGMax}}</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{currentRecipe.estimatedFinalGravity().toFixed(3)}}</span>
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <div class="col-xs-2">
+            <span class="label label-default">ABV</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{selectedStyle.ABVMin}}-{{selectedStyle.ABVMax}}</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{currentRecipe.estimatedABV().toFixed(2)}}</span>
+        </div>
+    </div>
+
+    <!-- Select Basic -->
+    <div class="form-group">
+        <div class="col-xs-2">
+            <span class="label label-default">IBU</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{selectedStyle.IBUMin}}-{{selectedStyle.IBUMax}}</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{currentRecipe.estimatedIBUTinseth().toFixed(2)}}</span>
+        </div>
+    </div>
+
+    <!-- Appended Input-->
+    <div class="form-group">
+        <div class="col-xs-2">
+            <span class="label label-default">SRM</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{selectedStyle.ColorMin}}-{{selectedStyle.ColorMax}}</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{currentRecipe.estimatedSRM()}}</span>
+        </div>
+    </div>
+
+    <!-- Appended Input-->
+    <div class="form-group">
+        <div class="col-xs-2">
+            <span class="label label-default">Color</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{selectedStyle.ColorMin}}-{{selectedStyle.ColorMax}}</span>
+        </div>
+        <div class="col-xs-2">
+            <span class="label label-default">{{currentRecipe.estimatedSRM()}}</span>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="col-md-12"><h2>Matching Styles</h2></div>
+    <div class="col-md-12">&nbsp;</div>
+    <div ng-show="styleMatchingResults.length != 0">
+    <div class="col-md-12" ng-repeat="style in styleMatchingResults.result">{{style.Name}}</div>
+    </div>
+    <div ng-hide="styleMatchingResults.length != 0">
+        <div class="col-md-12">No matches found</div>
+    </div>
+    <div class="col-md-12">&nbsp;</div>
+</div>
+</tab>
+<tab heading="Fermentables">
+    <div>
+        &nbsp;
+    </div>
+    <div>
+        <div class="pull-left">
+            <h2>Available Fermentables</h2>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Potential</th>
+                <th>SRM</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="fermentable in fermentables | startFrom:getFermentableStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{fermentable.Name}}</td>
+                <td class="col-xs-2">{{fermentable.Type}}</td>
+                <td class="col-xs-2">{{fermentable.Potential}}</td>
+                <td class="col-xs-2">{{fermentable.Color}}</td>
+                <td class="col-xs-1"><input id="fermentable_{{$index}}" name="fermentable_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="fermentable.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg"
+                            ng-click="addFermentable(fermentable._id.$oid)">
+                        <span class="fa fa-plus"></span> Add
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="fermentables.length"
+                        page="currentFermentablePage" items-per-page="itemsPerPage"
+                        on-select-page="changeFermentablePage(page)"></pagination>
+        </div>
+    </div>
+    <div>
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <div class="pull-left">
+            <h2>Fermentables in Recipe</h2>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Potential</th>
+                <th>SRM</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="fermentable in currentRecipe.Fermentables| startFrom:getRecipeFermentableStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{fermentable.Name}}</td>
+                <td class="col-xs-2">{{fermentable.Type}}</td>
+                <td class="col-xs-2">{{fermentable.Potential}}</td>
+                <td class="col-xs-2">{{fermentable.Color}}</td>
+                <td class="col-xs-1"><input id="recipe_fermentable_{{$index}}" name="recipe_fermentable_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="fermentable.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="removeFermentable($index)">
+                        <span class="fa fa-minus"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="currentRecipe.Fermentables.length"
+                        page="currentRecipeFermentablePage" items-per-page="itemsPerPage"
+                        on-select-page="changeRecipeFermentablePage(page)"></pagination>
+        </div>
+    </div>
+</tab>
+<tab heading="Adjuncts">
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Available Adjuncts</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Use</th>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="adjunct in adjuncts | startFrom:getAdjunctStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{adjunct.Name}}</td>
+                <td class="col-xs-2">{{adjunct.Type}}</td>
+                <td class="col-xs-2"><select id="adjunct_use_{{$index}}" name="adjunct_use_{{$index}}"
+                                             class="form-control" ng-model="adjunct.Use">
+                    <option value="Mash">Mash</option>
+                    <option value="Boil">Boil</option>
+                    <option value="Primary">Primary</option>
+                    <option value="Secondary">Secondary</option>
+                    <option value="Bottling">Bottling</option>
+                </select></td>
+                <td class="col-xs-1"><input id="adjunct_time_{{$index}}" name="adjunct_time_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="adjunct.Time"></td>
+                <td class="col-xs-1"><input id="adjunct_amount_{{$index}}" name="adjunct_amount_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="adjunct.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="addAdjunct(adjunct._id.$oid)">
+                        <span class="fa fa-plus"></span> Add
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="adjuncts.length" page="currentAdjunctPage"
+                        items-per-page="itemsPerPage" on-select-page="changeAdjunctPage(page)"></pagination>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Adjuncts in Recipe</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Use</th>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="adjunct in currentRecipe.Adjuncts| startFrom:getRecipeAdjunctStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{adjunct.Name}}</td>
+                <td class="col-xs-2">{{adjunct.Type}}</td>
+                <td class="col-xs-2"><select id="adjunct_recipe_use_{{$index}}" name="adjunct_recipe_use_{{$index}}"
+                                             class="form-control" ng-model="adjunct.Use">
+                    <option value="Mash">Mash</option>
+                    <option value="Boil">Boil</option>
+                    <option value="Primary">Primary</option>
+                    <option value="Secondary">Secondary</option>
+                    <option value="Bottling">Bottling</option>
+                </select></td>
+                <td class="col-xs-1"><input id="adjunct_recipe_time_{{$index}}" name="adjunct_recipe_time_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="adjunct.Time"></td>
+                <td class="col-xs-1"><input id="adjunct_recipe_amount_{{$index}}"
+                                            name="adjunct_recipe_amount_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="adjunct.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="removeAdjunct($index)">
+                        <span class="fa fa-minus"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="currentRecipe.Adjuncts.length"
+                        page="currentRecipeAdjunctPage" items-per-page="itemsPerPage"
+                        on-select-page="changeRecipeAdjunctPage(page)"></pagination>
+        </div>
+    </div>
+</tab>
+<tab heading="Hops">
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Available Hops</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Use</th>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="hop in hops | startFrom:getHopStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{hop.Name}}</td>
+                <td class="col-xs-2">{{hop.Type}}</td>
+                <td class="col-xs-2"><select id="hop_use_{{$index}}" name="hop_use_{{$index}}" class="form-control"
+                                             ng-model="hop.Use">
+                    <option value="Mash">Mash</option>
+                    <option value="First Wort">First Wort</option>
+                    <option value="Boil">Boil</option>
+                    <option value="Aroma">Aroma</option>
+                    <option value="Dry Hop">Dry Hop</option>
+                </select></td>
+                <td class="col-xs-1"><input id="hop_time_{{$index}}" name="hop_time_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="hop.Time"></td>
+                <td class="col-xs-1"><input id="hop_amount_{{$index}}" name="hop_amount_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="hop.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="addHop(hop._id.$oid)">
+                        <span class="fa fa-plus"></span> Add
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="hops.length" page="currentHopPage"
+                        items-per-page="itemsPerPage" on-select-page="changeHopPage(page)"></pagination>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Hops in Recipe</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Use</th>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="hop in currentRecipe.Hops| startFrom:getRecipeHopStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{hop.Name}}</td>
+                <td class="col-xs-2">{{hop.Type}}</td>
+                <td class="col-xs-2"><select id="hop_recipe_use_{{$index}}" name="hop_recipe_use_{{$index}}"
+                                             class="form-control" ng-model="hop.Use">
+                    <option value="Mash">Mash</option>
+                    <option value="First Wort">First Wort</option>
+                    <option value="Boil">Boil</option>
+                    <option value="Aroma">Aroma</option>
+                    <option value="Dry Hop">Dry Hop</option>
+                </select></td>
+                <td class="col-xs-1"><input id="hop_recipe_time_{{$index}}" name="hop_recipe_time_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="hop.Time"></td>
+                <td class="col-xs-1"><input id="hop_recipe_amount_{{$index}}" name="hop_recipe_amount_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="hop.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="removeHop($index)">
+                        <span class="fa fa-minus"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="currentRecipe.Hops.length"
+                        page="currentRecipeHopPage" items-per-page="itemsPerPage"
+                        on-select-page="changeRecipeHopPage(page)"></pagination>
+        </div>
+    </div>
+</tab>
+<tab heading="Yeast">
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Available Yeast</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Form</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="ingredient in yeast | startFrom:getYeastStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{ingredient.Name}}</td>
+                <td class="col-xs-2">{{ingredient.Type}}</td>
+                <td class="col-xs-2">{{ingredient.Form}}</td>
+                <td class="col-xs-1"><input id="yeast_amount_{{$index}}" name="yeast_amount_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="ingredient.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="addYeast(ingredient._id.$oid)">
+                        <span class="fa fa-plus"></span> Add
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="yeast.length"
+                        page="currentYeastPage" items-per-page="itemsPerPage"
+                        on-select-page="changeYeastPage(page)"></pagination>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Yeast in Recipe</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Form</th>
+                <th>Amount</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="yeast in currentRecipe.Yeast| startFrom:getRecipeYeastStartFrom() | limitTo:itemsPerPage">
+                <td class="col-xs-4">{{yeast.Name}}</td>
+                <td class="col-xs-2">{{yeast.Type}}</td>
+                <td class="col-xs-2">{{yeast.Form}}</td>
+                <td class="col-xs-1"><input id="yeast_recipe_amount_{{$index}}" name="yeast_recipe_amount_{{$index}}"
+                                            class="form-control" placeholder=""
+                                            type="tel"
+                                            ng-model="yeast.Amount"></td>
+                <td class="col-xs-1">
+                    <button type="button" class="btn btn-default btn-lg" ng-click="removeYeast($index)">
+                        <span class="fa fa-minus"></span> Remove
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pull-right">
+            <pagination boundary-links="true" max-size="5" total-items="currentRecipe.Yeast.length"
+                        page="currentRecipeYeastPage" items-per-page="itemsPerPage"
+                        on-select-page="changeRecipeYeastPage(page)"></pagination>
+        </div>
+    </div>
+</tab>
+<tab heading="Water">
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Brewing Water</h2>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="selectSrcWater">Source Water</label>
+
+            <div class="col-xs-4">
+                <select id="selectSrcWater" name="selectSrcWater" class="form-control"
+                        ng-options="water._id.$oid as water.Name for water in waterProfiles"
+                        ng-model="currentRecipe.SourceWaterProfile" ng-change="onWaterProfileChanged()">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="selectDestWater">Desired Water</label>
+
+            <div class="col-xs-4">
+                <select id="selectDestWater" name="selectDestWater" class="form-control"
+                        ng-options="water._id.$oid as water.Name for water in waterProfiles"
+                        ng-model="currentRecipe.DesiredWaterProfile" ng-change="onWaterProfileChanged()">
+                </select>
+            </div>
+        </div>
+    </div>
+</tab>
+<tab heading="Mash Profile">
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Mash Profile</h2>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="selectMashProfile">Source Water</label>
+
+            <div class="col-xs-4">
+                <select id="selectMashProfile" name="selectMashProfile" class="form-control"
+                        ng-options="mash._id.$oid as mash.Name for mash in mashProfiles"
+                        ng-model="currentRecipe.MashProfile">
+                </select>
+            </div>
+        </div>
+    </div>
+
+</tab>
+<tab heading="Fermentation">
+    <div class="col-xs-12">
+        &nbsp;
+    </div>
+    <div class="col-xs-12">
+        <h2>Fermentation Profile</h2>
+    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textDaysPrimary">Days Primary Fermentation</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textDaysPrimary" name="textDaysPrimary" class="form-control" type="tel"
+                           ng-model="currentRecipe.PrimaryAge">
+                    <span class="input-group-addon">days</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textTempPrimary">Temperature Primary Fermentation</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textTempPrimary" name="textTempPrimary" class="form-control" type="tel"
+                           ng-model="currentRecipe.PrimaryTemp">
+                    <span class="input-group-addon">degrees</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textDaysSecondary">Days Secondary Fermentation</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textDaysSecondary" name="textDaysSecondary" class="form-control" type="tel"
+                           ng-model="currentRecipe.SecondaryAge">
+                    <span class="input-group-addon">days</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textTempSecondary">Temperature Secondary Fermentation</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textTempSecondary" name="textTempSecondary" class="form-control" type="tel"
+                           ng-model="currentRecipe.SecondaryTemp">
+                    <span class="input-group-addon">degrees</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textDaysTertiary">Days Tertiary Fermentation</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textDaysTertiary" name="textDaysTertiary" class="form-control" type="tel"
+                           ng-model="currentRecipe.TertiaryAge">
+                    <span class="input-group-addon">days</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textTempTertiary">Temperature Tertiary Fermentation</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textTempTertiary" name="textTempTertiary" class="form-control" type="tel"
+                           ng-model="currentRecipe.TertiaryTemp">
+                    <span class="input-group-addon">degrees</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textDaysConditioning">Days Conditioning</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textDaysConditioning" name="textDaysConditioning" class="form-control" type="tel"
+                           ng-model="currentRecipe.ConditioningAge">
+                    <span class="input-group-addon">days</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-2 control-label" for="textTempConditioning">Temperature Conditioning</label>
+
+            <div class="col-xs-4">
+                <div class="input-group">
+                    <input id="textTempConditioning" name="textTempConditioning" class="form-control" type="tel"
+                           ng-model="currentRecipe.ConditioningTemp">
+                    <span class="input-group-addon">degrees</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</tab>
+</tabset>
+<div class="form-group">
+    <div class="col-xs-7 pull-right">
+        <a ng-click="saveRecipe()" class="btn btn-success">Update</a>
+        <a href="#/" class="btn btn-warning">Cancel</a>
+    </div>
+</div>
+</fieldset>
+</form>
+</div>

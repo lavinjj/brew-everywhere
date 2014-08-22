@@ -1,0 +1,6 @@
+<div class="row">
+    <div class="alert alert-dismissable {{notification.type}}" ng-repeat="notification in notifications">
+        <button type="button" class="close" ng-click="acknowledgeAlert($index)" aria-hidden="true">&times;</button>
+        {{notification.message}}
+    </div>
+</div>

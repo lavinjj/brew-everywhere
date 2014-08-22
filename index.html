@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="brew-everywhere">
+<head>
+    <title>Brew Everywhere</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="app.less" type="text/css" rel="stylesheet/less">
+</head>
+<body>
+<div id="fb-root"></div>
+<!-- Livereload script for development only (stripped during dist build) -->
+<script src="http://localhost:35729/livereload.js" data-build="exclude"></script>
+
+<!-- JS from Bower Components -->
+<script src="bower_components/less.js/dist/less-1.6.2.js" data-build="exclude"></script>
+<script src="bower_components/json3/lib/json3.js"></script>
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/underscore/underscore.js"></script>
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/log4javascript/log4javascript.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="bower_components/angular-ui-utils/ui-utils.js"></script>
+<!-- Add New Bower Component JS Above -->
+
+
+<!-- Main App JS -->
+<script src="app.js"></script>
+<script src="partial/home/home.js"></script>
+<script src="partial/login/login.js"></script>
+<script src="partial/menu/menu.js"></script>
+<script src="partial/profile/profile.js"></script>
+<script src="partial/register/register.js"></script>
+<script src="partial/calendar/calendar.js"></script>
+<script src="directive/dialog/dialog.js"></script>
+<script src="directive/notificationList/notificationList.js"></script>
+<script src="directive/waitSpinner/waitSpinner.js"></script>
+<script src="partial/base/base.js"></script>
+<script src="service/authenticate/authenticate.js"></script>
+<script src="service/dialog/dialog.js"></script>
+<script src="service/errors/errors.js"></script>
+<script src="service/googlePlusAuthentication/googlePlusAuthentication.js"></script>
+<script src="service/logging/logging.js"></script>
+<script src="service/messaging/messaging.js"></script>
+<script src="service/notification/notification.js"></script>
+<script src="service/events/events.js"></script>
+<script src="service/mongolab/mongolab.js"></script>
+<!--<script src="service/facebookAuthenticate/facebookAuthenticate.js"></script>-->
+<script src="model/brewer/brewer.js"></script>
+<script src="model/modelTransformer/modelTransformer.js"></script>
+<script src="service/brewerDataService/brewerDataService.js"></script>
+<script src="model/adjunct/adjunct.js"></script>
+<script src="model/brewerInventory/brewerInventory.js"></script>
+<script src="model/equipment/Equipment.js"></script>
+<script src="model/fermentable/fermentable.js"></script>
+<script src="model/hop/hop.js"></script>
+<script src="model/mashProfile/mashProfile.js"></script>
+<script src="model/mashStep/mashStep.js"></script>
+<script src="model/recipe/recipe.js"></script>
+<script src="model/style/style.js"></script>
+<script src="model/waterProfile/waterProfile.js"></script>
+<script src="model/yeast/yeast.js"></script>
+<script src="service/adjunctDataService/adjunctDataService.js"></script>
+<script src="service/equipmentDataService/equipmentDataService.js"></script>
+<script src="service/fermentableDataService/fermentableDataService.js"></script>
+<script src="service/hopDataService/hopDataService.js"></script>
+<script src="service/mashProfileDataService/mashProfileDataService.js"></script>
+<script src="service/recipeDataService/recipeDataService.js"></script>
+<script src="service/styleDataService/styleDataService.js"></script>
+<script src="service/waterProfileDataService/waterProfileDataService.js"></script>
+<script src="service/yeastDataService/yeastDataService.js"></script>
+<script src="partial/recipe/recipe.js"></script>
+<script src="filter/startFrom/startFrom.js"></script>
+<script src="filter/fermentableType/fermentableType.js"></script>
+<script src="filter/filteFermentable/filterFermentable.js"></script>
+<script src="filter/translateFermentableToDisplay/translateFermentableToDisplay.js"></script>
+<script src="service/googleCalendar/googleCalendar.js"></script>
+<script src="service/googleTasks/googleTasks.js"></script>
+<script src="partial/schedulebrewday/schedulebrewday.js"></script>
+<script src="service/brewCalendar/brewCalendar.js"></script>
+<script src="service/stateMachine/stateMachine.js"></script>
+<script src="service/rulesEngine/rulesEngine.js"></script>
+<script src="service/md5/md5.js"></script>
+<script src="service/sha/sha.js"></script>
+<script src="service/utf8encode/utf8encode.js"></script>
+<script src="partial/register/register.js"></script>
+<script src="partial/error/error.js"></script>
+<script src="partial/preheatmash/preheatmash.js"></script>
+<script src="partial/mash/mash.js"></script>
+<script src="partial/mashout/mashout.js"></script>
+<script src="partial/preheatboil/preheatboil.js"></script>
+<script src="partial/boil/boil.js"></script>
+<script src="partial/startbrewing/startbrewing.js"></script>
+<script src="service/brewingHistoryDataService/brewingHistoryDataService.js"></script>
+<script src="model/styleMatchingRules/styleMatchingRules.js"></script>
+<script src="model/brewingProcessStateMachine/brewingProcessStateMachine.js"></script>
+<script src="directive/uniqueEmail/uniqueEmail.js"></script>
+<script src="directive/mustEqual/mustEqual.js"></script>
+<script src="directive/uniqueUserName/uniqueUserName.js"></script>
+<script src="directive/gravatar/gravatar.js"></script>
+<!-- Add New Component JS Above -->
+
+<div>
+    <div id="content" class="container">
+        <dialog></dialog>
+        <wait-spinner></wait-spinner>
+        <div class="row">
+            <div ng-view>
+            </div>
+        </div>
+        <notification-list></notification-list>
+    </div>
+</div>
+
+<!-- external scripts to be left alone -->
+<script src="https://apis.google.com/js/plusone.js" data-remove="exclude" ></script>
+<script src="https://apis.google.com/js/client:plusone.js" data-remove="exclude" ></script>
+<!--<script src="https://connect.facebook.net/en_US/all.js" data-remove="exclude" ></script>-->
+
+</body>
+</html>

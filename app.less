@@ -1,0 +1,144 @@
+@import "bower_components/bootstrap/less/bootstrap.less";
+@import "variables.less";
+@import "bootswatch.less";
+@import "bower_components/font-awesome/less/font-awesome.less";
+
+@fa-font-path: "bower_components/font-awesome/fonts";
+
+/* Component LESS */
+@import "partial/login/login.less";
+@import "partial/home/home.less";
+@import "partial/register/register.less";
+@import "partial/profile/profile.less";
+@import "partial/calendar/calendar.less";
+@import "partial/menu/menu.less";
+@import "directive/dialog/dialog.less";
+@import "directive/notificationList/notificationList.less";
+@import "directive/waitSpinner/waitSpinner.less";
+@import "partial/base/base.less";
+@import "partial/recipe/recipe.less";
+@import "partial/schedulebrewday/schedulebrewday";
+@import "partial/register/register.less";
+@import "partial/error/error.less";
+@import "partial/preheatmash/preheatmash";
+@import "partial/mash/mash.less";
+@import "partial/mashout/mashout.less";
+@import "partial/preheatboil/preheatboil.less";
+@import "partial/boil/boil.less";
+@import "partial/startbrewing/startbrewing.less";
+/* Add Component LESS Above */
+
+/* Required for Angular UI Bootstrap */
+.nav, .pagination, .carousel a {
+  cursor: pointer;
+}
+
+/* Personal preference for BS modal.  The LESS below makes the backdrop white and
+   causes the modal to fade in rather than slide in. */
+@modal-backdrop-bg: white;
+.modal {
+  &.fade {
+    .transition(opacity .3s);
+  }
+  &.fade .modal-dialog {
+    .translate(0, 0);
+  }
+}
+
+/* hexagon css */
+.hexagon-recipe {
+  position: relative;
+  width: 200px;
+  height: 115.47px;
+  margin: 57.74px 0;
+  background-image: url(img/malt.jpg);
+  background-size: auto 207.8461px;
+  background-position: center;
+  border-left: solid 5px #62c462;
+  border-right: solid 5px #62c462;
+}
+
+.hexagon-carboy {
+  position: relative;
+  width: 200px;
+  height: 115.47px;
+  margin: 57.74px 0;
+  background-image: url(img/carboy.jpg);
+  background-size: auto 207.8461px;
+  background-position: center;
+  border-left: solid 5px #62c462;
+  border-right: solid 5px #62c462;
+}
+
+.hexagon-brew {
+  position: relative;
+  width: 200px;
+  height: 115.47px;
+  margin: 57.74px 0;
+  background-image: url(img/brewsculpture.jpg);
+  background-size: auto 207.8461px;
+  background-position: center;
+  border-left: solid 5px #62c462;
+  border-right: solid 5px #62c462;
+}
+
+.hexTop,
+.hexBottom {
+  position: absolute;
+  z-index: 1;
+  width: 141.42px;
+  height: 141.42px;
+  overflow: hidden;
+  -webkit-transform: scaleY(0.5774) rotate(-45deg);
+  -ms-transform: scaleY(0.5774) rotate(-45deg);
+  transform: scaleY(0.5774) rotate(-45deg);
+  background: inherit;
+  left: 24.29px;
+}
+
+/*counter transform the bg image on the caps*/
+.hexTop:after,
+.hexBottom:after {
+  content: "";
+  position: absolute;
+  width: 190.0000px;
+  height: 109.69655114602891px;
+  -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-54.8483px);
+  -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-54.8483px);
+  transform: rotate(45deg) scaleY(1.7321) translateY(-54.8483px);
+  -webkit-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
+  transform-origin: 0 0;
+  background: inherit;
+}
+
+.hexTop {
+  top: -70.7107px;
+  border-top: solid 7.0711px #62c462;
+  border-right: solid 7.0711px #62c462;
+}
+
+.hexTop:after {
+  background-position: center top;
+}
+
+.hexBottom {
+  bottom: -70.7107px;
+  border-bottom: solid 7.0711px #62c462;
+  border-left: solid 7.0711px #62c462;
+}
+
+.hexBottom:after {
+  background-position: center bottom;
+}
+
+.hexagon:after {
+  content: "";
+  position: absolute;
+  top: 2.8868px;
+  left: 0;
+  width: 190.0000px;
+  height: 109.6966px;
+  z-index: 2;
+  background: inherit;
+}

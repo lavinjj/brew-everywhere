@@ -1,0 +1,27 @@
+<div class="col-md-12" ng-controller="StartbrewingCtrl">
+    <form class="form-horizontal" name="startBrewingForm">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Start Brewing a Recipe</legend>
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-xs-2 control-label" for="selectRecipe">Recipe</label>
+                    <div class="col-xs-4">
+                        <select id="selectRecipe" name="selectRecipe" class="form-control"
+                                ng-options="recipe.Name for recipe in recipes"
+                                ng-model="currentRecipe" ng-required="true">
+                            <option>Select a Recipe to Brew</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="form-group">
+                <div class="col-xs-7">
+                    <button ng-click="onBrewRecipe()" class="btn btn-lg btn-block btn-success" ng-disabled="startBrewingForm.$invalid">Start</button>
+                    <button href="#/" class="btn btn-lg btn-block btn-warning">Cancel</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
