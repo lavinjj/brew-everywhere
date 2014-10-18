@@ -56,7 +56,7 @@ Ensure you have Node.js installed.
     
     c.	Once your account has been created, you'll be redirected to your account home page. To create a new database, click on the **Create New** button in the Databases section.
     
-    d.	You'll be redirected to the Create Shared Plan Database page. Enter **breweverywhere** for the database name; select your preferred Cloud Provider; select the free database; enter a username and password to create a new database user and click the **Create Database** button.
+    d.	You'll be redirected to the Create Shared Plan Database page. Enter **brew_everywhere** for the database name; select your preferred Cloud Provider; select the free database; enter a username and password to create a new database user and click the **Create Database** button.
     
     e.	Once your database has been created, you'll be redirected to your account home page and you should see the new database under the Databases section. Click on the name of the database so you can start adding the collections to the database.
     
