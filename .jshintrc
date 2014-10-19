@@ -24,6 +24,6 @@
         "inject": true,
         "it": true,
         "expect": true,
-        "spy": true
+        "spyOn": true
     }
 }
