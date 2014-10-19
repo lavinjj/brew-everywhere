@@ -99,8 +99,10 @@ Ensure you have Node.js installed.
     g.	Enter http://localhost:9000/ in the AUTHORIZED JAVASCRIPT ORIGINS TEXT BOX.
     
     h.	Click Create Client ID
+        
+    n.	Click on the API Link and enable the Google+, Google Calendar and Goolge Tasks APIs
     
-    i.	Copy the Client ID and enter it intothe app.js file where the line reads "clientId": "<YOUR CLIENT ID>”
+    i.	Copy the Client ID and enter it into the app.js file where the line reads "clientId": "<YOUR CLIENT ID>”
 
 9.	Facebook App Creation
 
@@ -129,8 +131,6 @@ Ensure you have Node.js installed.
     l.	Click on the Advanced Tab at the top of the page.
     
     m.	Look for the Client ID towards the middle of the page. Copy this and enter it into the app.js file where the line reads facebookAuthenticate.setApiKey('<YOUR_API_KEY>');
-    
-    n.	Click on the API Link and enable the Google+, Google Calendar and Goolge Tasks APIs
 
 
 Then run the following commands in the directory:
