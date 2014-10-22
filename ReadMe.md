@@ -56,7 +56,7 @@ Ensure you have Node.js installed.
     
     c.	Once your account has been created, you'll be redirected to your account home page. To create a new database, click on the **Create New** button in the Databases section.
     
-    d.	You'll be redirected to the Create Shared Plan Database page. Enter **brew_everywhere** for the database name; select your preferred Cloud Provider; select the free database; enter a username and password to create a new database user and click the **Create Database** button.
+    d.	You'll be redirected to the Create Shared Plan Database page. Enter **brew_everywhere** for the database name; select your preferred Cloud Provider; select the free database; enter a username and password to create a new database user and click the **Create Database** button. If you change the database name change the  database name in the file service/constants/constants.js.
     
     e.	Once your database has been created, you'll be redirected to your account home page and you should see the new database under the Databases section. Click on the name of the database so you can start adding the collections to the database.
     
@@ -64,7 +64,7 @@ Ensure you have Node.js installed.
     
     g.	Enter adjuncts and click the Create button. A new collection will be added to the Database.
     
-    h.	Repeat the above step to add the following collections; brewers, brewingHistory, equipment, fermentables, hops, mashprofiles, recipes, styles, waterprofiles and yeast.
+    h.	Repeat the above step to add the following collections; **adjuncts**, **brewers**, **brewingHistory**, **equipment**, **fermentables**, **hops**, **mashProfiles**, **recipes**, **styles**, **waterProfiles** and **yeast**. If you change these collection names, update the collection names in the file service/constants/constants.js.
     
     i.	Once completed click on the Tools tab and click on the Import/Export link. You will be shown a list of MongoDB commands that will allow you to import and export data to/from your mongolabs.com database. Copy the Import command below the JSON heading, we'll need that information to import seed data into the database later.
     
