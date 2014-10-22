@@ -14,7 +14,7 @@ angular.module('brew-everywhere').controller('RegisterCtrl',function($scope, $co
   };
 
   $scope.onBrewerRegisterComplete = function(){
-    $location.path('/home');
+    $location.path('/');
   };
 
   $scope.subscribe(events.message._CREATE_BREWER_COMPLETE_, $scope.onBrewerRegisterComplete);
