@@ -145,7 +145,15 @@ angular.module('brew-everywhere').factory('authenticate', function (messaging, e
         messaging.publish(events.message._SERVER_REQUEST_ENDED_);
     };
 
-    messaging.publish(events.message._CREATE_BREWER_COMPLETE_, createBrewerSuccessHandler);
+    messaging.subscribe(events.message._CREATE_BREWER_COMPLETE_, createBrewerSuccessHandler);
+
+    var registerBrewerHandler = function(brewer, password){
+        brewer.DateJoined = new Date();
+        brewer.Password = sha.hash(password + brewer.DateJoined.valueOf().toString());
+        messaging.publish(events.message._CREATE_BREWER_, [brewer]);
+    };
+
+    messaging.subscribe(events.message._REGISTER_BREWER_, registerBrewerHandler);
 
     var init = function () {
         currentUser = {};
@@ -159,6 +167,7 @@ angular.module('brew-everywhere').factory('authenticate', function (messaging, e
         facebookAuthenticatedHandler: facebookAuthenticatedHandler,
         authenticationFailureHandler: authenticationFailureHandler,
         login: login,
+        registerBrewerHandler: registerBrewerHandler,
         currentUserHandler: currentUserHandler
     };
 

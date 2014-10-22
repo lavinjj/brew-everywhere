@@ -1,4 +1,4 @@
-angular.module('brew-everywhere').controller('RegisterCtrl',function($scope, $controller, $location, events, sha, Brewer){
+angular.module('brew-everywhere').controller('RegisterCtrl',function($scope, $controller, $location, events, Brewer){
   // this call to $controller adds the base controller's methods
   // and properties to the controller's scope
   $controller('BaseCtrl', {$scope: $scope});
@@ -8,14 +8,12 @@ angular.module('brew-everywhere').controller('RegisterCtrl',function($scope, $co
   $scope.confirmpassword = "";
 
   $scope.register = function () {
-    $scope.brewer.DateJoined = new Date();
-    $scope.brewer.Password = sha.hash($scope.password + $scope.brewer.DateJoined.valueOf().toString());
-    $scope.publish(events.message._CREATE_BREWER_, [$scope.brewer]);
+    $scope.publish(events.message._REGISTER_BREWER_, [$scope.brewer, $scope.password]);
   };
 
   $scope.onBrewerRegisterComplete = function(){
-    $location.path('/');
+    $location.path('/home');
   };
 
-  $scope.subscribe(events.message._CREATE_BREWER_COMPLETE_, $scope.onBrewerRegisterComplete);
+  $scope.subscribe(events.message._AUTHENTICATE_USER_COMPLETE_, $scope.onBrewerRegisterComplete);
 });
