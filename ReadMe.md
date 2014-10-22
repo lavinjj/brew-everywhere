@@ -74,7 +74,7 @@ Ensure you have Node.js installed.
 
     a.	In the sample app source folder in the data folder there are two files import.cmd and import.sh.
     
-    b.	Edit the file specific for your operating system. Use the information from step I under the Mongolabs.com Account and Database steps to replace <server>, <port>, <user> and <password>
+    b.	Edit the file specific for your operating system. Use the information from step I under the Mongolabs.com Account and Database steps to replace **server**, **port**, **user** and **password**
     
     c.	Replace <mongodb_path> with the path to where you installed mongodb.
     
