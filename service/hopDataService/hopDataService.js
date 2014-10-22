@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('hopDataService',function(messaging, events, mongolab, modelTransformer, Hop) {
+angular.module('brew-everywhere').factory('hopDataService',function(messaging, events, constants, mongolab, modelTransformer, Hop) {
   var hops = [];
 
   var getHops = function () {
-    return mongolab.query('brew_everywhere', 'hops', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.hopCollection, [])
         .then(getHopSuccessHandler, getHopErrorHandler);
   };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('hopDataService',function(messaging, e
   messaging.subscribe(events.message._GET_HOPS_, getHops);
 
   var getHopById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'hops', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.hopCollection, id, [])
         .then(getHopByIdSuccessHandler, getHopByIdErrorHandler);
   };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('hopDataService',function(messaging, e
   messaging.subscribe(events.message._GET_HOP_BY_ID_, getHopById);
 
   var createHop = function (hop) {
-    return mongolab.create('brew_everywhere', 'hops', hop)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.hopCollection, hop)
         .then(createHopSuccessHandler, createHopErrorHandler);
   };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('hopDataService',function(messaging, e
   messaging.subscribe(events.message._CREATE_HOP_, createHop);
 
   var updateHop = function (hop) {
-    return mongolab.update('brew_everywhere', 'hops', hop)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.hopCollection, hop)
         .then(updateHopSuccessHandler, updateHopErrorHandler);
   };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('hopDataService',function(messaging, e
   messaging.subscribe(events.message._UPDATE_HOP_, updateHop);
 
   var deleteHop = function (hop) {
-    return mongolab.delete('brew_everywhere', 'hops', hop)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.hopCollection, hop)
         .then(deleteHopSuccessHandler, deleteHopErrorHandler);
   };
 

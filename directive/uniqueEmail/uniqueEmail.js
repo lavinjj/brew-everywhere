@@ -1,4 +1,4 @@
-angular.module('brew-everywhere').directive('uniqueEmail', function (mongolab) {
+angular.module('brew-everywhere').directive('uniqueEmail', function (mongolab, constants) {
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -19,7 +19,7 @@ angular.module('brew-everywhere').directive('uniqueEmail', function (mongolab) {
       ctrl.$parsers.unshift(function (viewValue) {
         // do nothing unless we match a valid email address
         if ((viewValue !== null) && (viewValue !== undefined) && (viewValue !== '') && (null !== viewValue.match(/.*@.*\..{2}/))) {
-          mongolab.query('brew_everywhere', 'brewers', {q: {Email: viewValue}})
+          mongolab.query(constants.mongodb.database, constants.mongodb.brewerCollection, {q: {Email: viewValue}})
             .then(getBrewerByEmailSuccessHandler, getBrewerByEmailErrorHandler);
         }
 

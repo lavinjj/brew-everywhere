@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('brewerDataService', function (messaging, events, mongolab, modelTransformer, Brewer) {
+angular.module('brew-everywhere').factory('brewerDataService', function (messaging, events, constants, mongolab, modelTransformer, Brewer) {
   var brewers = [];
 
   var getBrewerByUserName = function (username) {
-    return mongolab.query('brew_everywhere', 'brewers', {q: {UserName: username}})
+    return mongolab.query(constants.mongodb.database, constants.mongodb.brewerCollection, {q: {UserName: username}})
         .then(getBrewerByUserNameSuccessHandler, getBrewerByUserNameErrorHandler);
   };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('brewerDataService', function (messagi
   messaging.subscribe(events.message._GET_BREWER_BY_USERNAME_, getBrewerByUserName);
 
   var getBrewerByEmail = function (email) {
-    mongolab.query('brew_everywhere', 'brewers', {q: {Email: email}})
+    mongolab.query(constants.mongodb.database, constants.mongodb.brewerCollection, {q: {Email: email}})
         .then(getBrewerByEmailSuccessHandler, getBrewerByEmailErrorHandler);
   };
 
@@ -52,7 +52,7 @@ angular.module('brew-everywhere').factory('brewerDataService', function (messagi
   messaging.subscribe(events.message._GET_BREWER_BY_EMAIL_, getBrewerByEmail);
 
   var getBrewers = function () {
-    return mongolab.query('brew_everywhere', 'brewers', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.brewerCollection, [])
         .then(getBrewerSuccessHandler, getBrewerErrorHandler);
   };
 
@@ -77,7 +77,7 @@ angular.module('brew-everywhere').factory('brewerDataService', function (messagi
   messaging.subscribe(events.message._GET_BREWERS_, getBrewers);
 
   var getBrewerById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'brewers', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.brewerCollection, id, [])
         .then(getBrewerByIdSuccessHandler, getBrewerByIdErrorHandler);
   };
 
@@ -100,7 +100,7 @@ angular.module('brew-everywhere').factory('brewerDataService', function (messagi
   messaging.subscribe(events.message._GET_BREWER_BY_ID_, getBrewerById);
 
   var createBrewer = function (brewer) {
-    return mongolab.create('brew_everywhere', 'brewers', brewer)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.brewerCollection, brewer)
         .then(createBrewerSuccessHandler, createBrewerErrorHandler);
   };
 
@@ -123,7 +123,7 @@ angular.module('brew-everywhere').factory('brewerDataService', function (messagi
   messaging.subscribe(events.message._CREATE_BREWER_, createBrewer);
 
   var updateBrewer = function (brewer) {
-    return mongolab.update('brew_everywhere', 'brewers', brewer)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.brewerCollection, brewer)
         .then(updateBrewerSuccessHandler, updateBrewerErrorHandler);
   };
 
@@ -146,7 +146,7 @@ angular.module('brew-everywhere').factory('brewerDataService', function (messagi
   messaging.subscribe(events.message._UPDATE_BREWER_, updateBrewer);
 
   var deleteBrewer = function (brewer) {
-    return mongolab.delete('brew_everywhere', 'brewers', brewer)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.brewerCollection, brewer)
         .then(deleteBrewerSuccessHandler, deleteBrewerErrorHandler);
   };
 

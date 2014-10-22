@@ -47,7 +47,7 @@ angular.module('brew-everywhere')
     logging.setLogAppender(new log4javascript.BrowserConsoleAppender());
   })
   .run(function (mongolab) {
-    mongolab.setApiKey('YOUR_API_KEY');
+    mongolab.setApiKey('uBNL_OFgaJ77eIEA0ZLFmwFcvuVLVv0o');
   })
 //  .run(function (facebookAuthenticate) {
 //    facebookAuthenticate.setApiKey('<YOUR_API_KEY>');

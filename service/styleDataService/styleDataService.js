@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('styleDataService',function(messaging, events, mongolab, modelTransformer, Style) {
+angular.module('brew-everywhere').factory('styleDataService',function(messaging, events, constants, mongolab, modelTransformer, Style) {
   var styles = [];
 
   var getStyles = function () {
-    return mongolab.query('brew_everywhere', 'styles', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.styleCollection, [])
         .then(getStyleSuccessHandler, getStyleErrorHandler);
   };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('styleDataService',function(messaging,
   messaging.subscribe(events.message._GET_STYLES_, getStyles);
 
   var getStyleById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'styles', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.styleCollection, id, [])
         .then(getStyleByIdSuccessHandler, getStyleByIdErrorHandler);
   };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('styleDataService',function(messaging,
   messaging.subscribe(events.message._GET_STYLE_BY_ID_, getStyleById);
 
   var createStyle = function (style) {
-    return mongolab.create('brew_everywhere', 'styles', style)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.styleCollection, style)
         .then(createStyleSuccessHandler, createStyleErrorHandler);
   };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('styleDataService',function(messaging,
   messaging.subscribe(events.message._CREATE_STYLE_, createStyle);
 
   var updateStyle = function (style) {
-    return mongolab.update('brew_everywhere', 'styles', style)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.styleCollection, style)
         .then(updateStyleSuccessHandler, updateStyleErrorHandler);
   };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('styleDataService',function(messaging,
   messaging.subscribe(events.message._UPDATE_STYLE_, updateStyle);
 
   var deleteStyle = function (style) {
-    return mongolab.delete('brew_everywhere', 'styles', style)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.styleCollection, style)
         .then(deleteStyleSuccessHandler, deleteStyleErrorHandler);
   };
 

@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('waterProfileDataService',function(messaging, events, mongolab, modelTransformer, WaterProfile) {
+angular.module('brew-everywhere').factory('waterProfileDataService',function(messaging, events, constants, mongolab, modelTransformer, WaterProfile) {
   var waterProfiles = [];
 
   var getWaterProfiles = function () {
-    return mongolab.query('brew_everywhere', 'waterProfiles', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.waterProfileCollection, [])
         .then(getWaterProfileSuccessHandler, getWaterProfileErrorHandler);
   };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('waterProfileDataService',function(mes
   messaging.subscribe(events.message._GET_WATERPROFILES_, getWaterProfiles);
 
   var getWaterProfileById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'waterProfiles', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.waterProfileCollection, id, [])
         .then(getWaterProfileByIdSuccessHandler, getWaterProfileByIdErrorHandler);
   };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('waterProfileDataService',function(mes
   messaging.subscribe(events.message._GET_WATERPROFILE_BY_ID_, getWaterProfileById);
 
   var createWaterProfile = function (waterProfile) {
-    return mongolab.create('brew_everywhere', 'waterProfiles', waterProfile)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.waterProfileCollection, waterProfile)
         .then(createWaterProfileSuccessHandler, createWaterProfileErrorHandler);
   };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('waterProfileDataService',function(mes
   messaging.subscribe(events.message._CREATE_WATERPROFILE_, createWaterProfile);
 
   var updateWaterProfile = function (waterProfile) {
-    return mongolab.update('brew_everywhere', 'waterProfiles', waterProfile)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.waterProfileCollection, waterProfile)
         .then(updateWaterProfileSuccessHandler, updateWaterProfileErrorHandler);
   };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('waterProfileDataService',function(mes
   messaging.subscribe(events.message._UPDATE_WATERPROFILE_, updateWaterProfile);
 
   var deleteWaterProfile = function (waterProfile) {
-    return mongolab.delete('brew_everywhere', 'waterProfiles', waterProfile)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.waterProfileCollection, waterProfile)
         .then(deleteWaterProfileSuccessHandler, deleteWaterProfileErrorHandler);
   };
 

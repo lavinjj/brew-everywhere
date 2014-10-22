@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('mashProfileDataService', function (messaging, events, mongolab, modelTransformer, MashProfile) {
+angular.module('brew-everywhere').factory('mashProfileDataService', function (messaging, events, constants, mongolab, modelTransformer, MashProfile) {
   var mashProfiles = [];
 
   var getMashProfiles = function () {
-    return mongolab.query('brew_everywhere', 'mashProfiles', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.mashProfileCollection, [])
         .then(getMashProfileSuccessHandler, getMashProfileErrorHandler);
   };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('mashProfileDataService', function (me
   messaging.subscribe(events.message._GET_MASHPROFILES_, getMashProfiles);
 
   var getMashProfileById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'mashProfiles', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.mashProfileCollection, id, [])
         .then(getMashProfileByIdSuccessHandler, getMashProfileByIdErrorHandler);
   };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('mashProfileDataService', function (me
   messaging.subscribe(events.message._GET_MASHPROFILE_BY_ID_, getMashProfileById);
 
   var createMashProfile = function (mashProfile) {
-    return mongolab.create('brew_everywhere', 'mashProfiles', mashProfile)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.mashProfileCollection, mashProfile)
         .then(createMashProfileSuccessHandler, createMashProfileErrorHandler);
   };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('mashProfileDataService', function (me
   messaging.subscribe(events.message._CREATE_MASHPROFILE_, createMashProfile);
 
   var updateMashProfile = function (mashProfile) {
-    return mongolab.update('brew_everywhere', 'mashProfiles', mashProfile)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.mashProfileCollection, mashProfile)
         .then(updateMashProfileSuccessHandler, updateMashProfileErrorHandler);
   };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('mashProfileDataService', function (me
   messaging.subscribe(events.message._UPDATE_MASHPROFILE_, updateMashProfile);
 
   var deleteMashProfile = function (mashProfile) {
-    return mongolab.delete('brew_everywhere', 'mashProfiles', mashProfile)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.mashProfileCollection, mashProfile)
         .then(deleteMashProfileSuccessHandler, deleteMashProfileErrorHandler);
   };
 

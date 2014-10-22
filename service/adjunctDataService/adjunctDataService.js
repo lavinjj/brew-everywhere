@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('adjunctDataService', function (messaging, events, mongolab, modelTransformer, Adjunct) {
+angular.module('brew-everywhere').factory('adjunctDataService', function (messaging, events, constants, mongolab, modelTransformer, Adjunct) {
       var adjuncts = [];
 
       var getAdjuncts = function () {
-        return mongolab.query('brew_everywhere', 'adjuncts', [])
+        return mongolab.query(constants.mongodb.database, constants.mongodb.adjunctCollection, [])
             .then(getAdjunctSuccessHandler, getAdjunctErrorHandler);
       };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('adjunctDataService', function (messag
       messaging.subscribe(events.message._GET_ADJUNCTS_, getAdjuncts);
 
       var getAdjunctById = function (id) {
-        return mongolab.queryById('brew_everywhere', 'adjuncts', id, [])
+        return mongolab.queryById(constants.mongodb.database, constants.mongodb.adjunctCollection, id, [])
             .then(getAdjunctByIdSuccessHandler, getAdjunctByIdErrorHandler);
       };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('adjunctDataService', function (messag
       messaging.subscribe(events.message._GET_ADJUNCT_BY_ID_, getAdjunctById);
 
       var createAdjunct = function (adjunct) {
-        return mongolab.create('brew_everywhere', 'adjuncts', adjunct)
+        return mongolab.create(constants.mongodb.database, constants.mongodb.adjunctCollection, adjunct)
             .then(createAdjunctSuccessHandler, createAdjunctErrorHandler);
       };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('adjunctDataService', function (messag
       messaging.subscribe(events.message._CREATE_ADJUNCT_, createAdjunct);
 
       var updateAdjunct = function (adjunct) {
-        return mongolab.update('brew_everywhere', 'adjuncts', adjunct)
+        return mongolab.update(constants.mongodb.database, constants.mongodb.adjunctCollection, adjunct)
             .then(updateAdjunctSuccessHandler, updateAdjunctErrorHandler);
       };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('adjunctDataService', function (messag
       messaging.subscribe(events.message._UPDATE_ADJUNCT_, updateAdjunct);
 
       var deleteAdjunct = function (adjunct) {
-        return mongolab.delete('brew_everywhere', 'adjuncts', adjunct)
+        return mongolab.delete(constants.mongodb.database, constants.mongodb.adjunctCollection, adjunct)
             .then(deleteAdjunctSuccessHandler, deleteAdjunctErrorHandler);
       };
 

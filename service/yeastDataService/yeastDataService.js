@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('yeastDataService',function(messaging, events, mongolab, modelTransformer, Yeast) {
+angular.module('brew-everywhere').factory('yeastDataService',function(messaging, events, constants, mongolab, modelTransformer, Yeast) {
   var yeast = [];
 
   var getYeast = function () {
-    return mongolab.query('brew_everywhere', 'yeast', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.yeastCollection, [])
         .then(getYeastSuccessHandler, getYeastErrorHandler);
   };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('yeastDataService',function(messaging,
   messaging.subscribe(events.message._GET_YEAST_, getYeast);
 
   var getYeastById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'yeast', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.yeastCollection, id, [])
         .then(getYeastByIdSuccessHandler, getYeastByIdErrorHandler);
   };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('yeastDataService',function(messaging,
   messaging.subscribe(events.message._GET_YEAST_BY_ID_, getYeastById);
 
   var createYeast = function (yeast) {
-    return mongolab.create('brew_everywhere', 'yeast', yeast)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.yeastCollection, yeast)
         .then(createYeastSuccessHandler, createYeastErrorHandler);
   };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('yeastDataService',function(messaging,
   messaging.subscribe(events.message._CREATE_YEAST_, createYeast);
 
   var updateYeast = function (yeast) {
-    return mongolab.update('brew_everywhere', 'yeast', yeast)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.yeastCollection, yeast)
         .then(updateYeastSuccessHandler, updateYeastErrorHandler);
   };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('yeastDataService',function(messaging,
   messaging.subscribe(events.message._UPDATE_YEAST_, updateYeast);
 
   var deleteYeast = function (yeast) {
-    return mongolab.delete('brew_everywhere', 'yeast', yeast)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.yeastCollection, yeast)
         .then(deleteYeastSuccessHandler, deleteYeastErrorHandler);
   };
 

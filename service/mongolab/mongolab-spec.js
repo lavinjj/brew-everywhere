@@ -25,31 +25,31 @@ describe('mongolab', function() {
 
   }));
 
-  it('should return the records in a collection', inject(function(mongolab){
-    var expected = 'uBNL_OFgaJ77eIEA0ZLFmwFcvuVLVv0o';
+  it('should return the records in a collection', inject(function(mongolab, constants){
+    var expected = 'YOUR_API_KEY';
 
     mongolab.setApiKey(expected);
 
-    mongolab.query('brew_everywhere', 'adjuncts', {}).success(function(response){
+    mongolab.query(constants.mongodb.database, constants.mongodb.adjunctCollection, {}).success(function(response){
       expect(response).toBeTruthy();
       expect(response.length).toBe(69);
     });
 
   }));
 
-  it('should return a record for the given query', inject(function(mongolab){
-    var expected = 'uBNL_OFgaJ77eIEA0ZLFmwFcvuVLVv0o';
+  it('should return a record for the given query', inject(function(mongolab, constants){
+    var expected = 'YOUR_API_KEY';
 
     mongolab.setApiKey(expected);
 
-    mongolab.query('brew_everywhere', 'adjuncts', {q: {"Name": "Anise, Star"}}).success(function(response){
+    mongolab.query(constants.mongodb.database, constants.mongodb.adjunctCollection, {q: {"Name": "Anise, Star"}}).success(function(response){
       expect(response).toBeTruthy();
       expect(response.length).toBe(1);
     });
 
   }));
 
-  it('should create a new record in the collection', inject(function(mongolab){
+  it('should create a new record in the collection', inject(function(mongolab, constants){
     var user = {
       "UserName": "test_1376536470818",
       "FirstName": "Test",
@@ -65,16 +65,16 @@ describe('mongolab', function() {
       "BrewerIsAdmin": false
     };
 
-    var apikey = 'uBNL_OFgaJ77eIEA0ZLFmwFcvuVLVv0o';
+    var apikey = 'YOUR_API_KEY';
 
     mongolab.setApiKey(apikey);
 
-    mongolab.query('brew_everywhere', 'brewers', {}).success(function(response){
+    mongolab.query(constants.mongodb.database, constants.mongodb.brewerCollection, {}).success(function(response){
       var expected = response.length;
 
-      mongolab.create('brew_everywhere', 'brewers', user).success(function(response) {
+      mongolab.create(constants.mongodb.database, constants.mongodb.brewerCollection, user).success(function(response) {
 
-        mongolab.query('brew_everywhere', 'brewers', {}).success(function (response) {
+        mongolab.query(constants.mongodb.database, constants.mongodb.brewerCollection, {}).success(function (response) {
           var actual = response.length;
 
           expect(actual).toBe(expected + 1);

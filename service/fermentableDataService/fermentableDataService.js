@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('fermentableDataService', function(messaging, events, mongolab, modelTransformer, Fermentable) {
+angular.module('brew-everywhere').factory('fermentableDataService', function(messaging, events, constants, mongolab, modelTransformer, Fermentable) {
     var fermentable = [];
 
     var getFermentable = function () {
-      return mongolab.query('brew_everywhere', 'fermentables', [])
+      return mongolab.query(constants.mongodb.database, constants.mongodb.fermentableCollection, [])
           .then(getFermentableSuccessHandler, getFermentableErrorHandler);
     };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('fermentableDataService', function(mes
     messaging.subscribe(events.message._GET_FERMENTABLES_, getFermentable);
 
     var getFermentableById = function (id) {
-      return mongolab.queryById('brew_everywhere', 'fermentables', id, [])
+      return mongolab.queryById(constants.mongodb.database, constants.mongodb.fermentableCollection, id, [])
           .then(getFermentableByIdSuccessHandler, getFermentableByIdErrorHandler);
     };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('fermentableDataService', function(mes
     messaging.subscribe(events.message._GET_FERMENTABLE_BY_ID_, getFermentableById);
 
     var createFermentable = function (fermentable) {
-      return mongolab.create('brew_everywhere', 'fermentables', fermentable)
+      return mongolab.create(constants.mongodb.database, constants.mongodb.fermentableCollection, fermentable)
           .then(createFermentableSuccessHandler, createFermentableErrorHandler);
     };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('fermentableDataService', function(mes
     messaging.subscribe(events.message._CREATE_FERMENTABLE_, createFermentable);
 
     var updateFermentable = function (fermentable) {
-      return mongolab.update('brew_everywhere', 'fermentables', fermentable)
+      return mongolab.update(constants.mongodb.database, constants.mongodb.fermentableCollection, fermentable)
           .then(updateFermentableSuccessHandler, updateFermentableErrorHandler);
     };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('fermentableDataService', function(mes
     messaging.subscribe(events.message._UPDATE_FERMENTABLE_, updateFermentable);
 
     var deleteFermentable = function (fermentable) {
-      return mongolab.delete('brew_everywhere', 'fermentables', fermentable)
+      return mongolab.delete(constants.mongodb.database, constants.mongodb.fermentableCollection, fermentable)
           .then(deleteFermentableSuccessHandler, deleteFermentableErrorHandler);
     };
 

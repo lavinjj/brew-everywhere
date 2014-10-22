@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('recipeDataService',function(messaging, events, mongolab, modelTransformer, Recipe, Fermentable, Hop) {
+angular.module('brew-everywhere').factory('recipeDataService',function(messaging, events, constants, mongolab, modelTransformer, Recipe, Fermentable, Hop) {
   var recipes = [];
 
   var getRecipes = function () {
-    return mongolab.query('brew_everywhere', 'recipes', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.recipeCollection, [])
         .then(getRecipeSuccessHandler, getRecipeErrorHandler);
   };
 
@@ -32,7 +32,7 @@ angular.module('brew-everywhere').factory('recipeDataService',function(messaging
   messaging.subscribe(events.message._GET_RECIPES_, getRecipes);
 
   var getRecipesByBrewerId = function (brewerId) {
-    return mongolab.query('brew_everywhere', 'recipes', {q: {BrewerId: brewerId}})
+    return mongolab.query(constants.mongodb.database, constants.mongodb.recipeCollection, {q: {BrewerId: brewerId}})
       .then(getRecipesByBrewerIdSuccessHandler, getRecipesByBrewerIdErrorHandler);
   };
 
@@ -62,7 +62,7 @@ angular.module('brew-everywhere').factory('recipeDataService',function(messaging
   messaging.subscribe(events.message._GET_RECIPES_BY_BREWER_ID_, getRecipesByBrewerId);
 
   var getRecipeById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'recipes', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.recipeCollection, id, [])
         .then(getRecipeByIdSuccessHandler, getRecipeByIdErrorHandler);
   };
 
@@ -89,7 +89,7 @@ angular.module('brew-everywhere').factory('recipeDataService',function(messaging
   messaging.subscribe(events.message._GET_RECIPE_BY_ID_, getRecipeById);
 
   var createRecipe = function (recipe) {
-    return mongolab.create('brew_everywhere', 'recipes', recipe)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.recipeCollection, recipe)
         .then(createRecipeSuccessHandler, createRecipeErrorHandler);
   };
 
@@ -112,7 +112,7 @@ angular.module('brew-everywhere').factory('recipeDataService',function(messaging
   messaging.subscribe(events.message._CREATE_RECIPE_, createRecipe);
 
   var updateRecipe = function (recipe) {
-    return mongolab.update('brew_everywhere', 'recipes', recipe)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.recipeCollection, recipe)
         .then(updateRecipeSuccessHandler, updateRecipeErrorHandler);
   };
 
@@ -135,7 +135,7 @@ angular.module('brew-everywhere').factory('recipeDataService',function(messaging
   messaging.subscribe(events.message._UPDATE_RECIPE_, updateRecipe);
 
   var deleteRecipe = function (recipe) {
-    return mongolab.delete('brew_everywhere', 'recipes', recipe)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.recipeCollection, recipe)
         .then(deleteRecipeSuccessHandler, deleteRecipeErrorHandler);
   };
 

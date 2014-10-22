@@ -176,7 +176,9 @@ module.exports = function (grunt) {
         src: ['<%= dom_munger.data.appjs %>','bower_components/angular-mocks/angular-mocks.js'],
         options: {
           keepRunner: false,
-          specs: createFolderGlobs('*-spec.js')
+          specs: [ 'tests/support/test.messaging.js',
+              'tests/support/test.mongolab.js',
+              createFolderGlobs('*-spec.js')]
         }
       }
     }

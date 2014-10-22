@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('equipmentDataService',function(messaging, events, mongolab, modelTransformer, Equipment) {
+angular.module('brew-everywhere').factory('equipmentDataService',function(messaging, events, constants, mongolab, modelTransformer, Equipment) {
   var equipment = [];
 
   var getEquipment = function () {
-    return mongolab.query('brew_everywhere', 'equipment', [])
+    return mongolab.query(constants.mongodb.database, constants.mongodb.equipmentCollection, [])
         .then(getEquipmentSuccessHandler, getEquipmentErrorHandler);
   };
 
@@ -27,7 +27,7 @@ angular.module('brew-everywhere').factory('equipmentDataService',function(messag
   messaging.subscribe(events.message._GET_EQUIPMENT_, getEquipment);
 
   var getEquipmentById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'equipment', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.equipmentCollection, id, [])
         .then(getEquipmentByIdSuccessHandler, getEquipmentByIdErrorHandler);
   };
 
@@ -50,7 +50,7 @@ angular.module('brew-everywhere').factory('equipmentDataService',function(messag
   messaging.subscribe(events.message._GET_EQUIPMENT_BY_ID_, getEquipmentById);
 
   var createEquipment = function (equipment) {
-    return mongolab.create('brew_everywhere', 'equipment', equipment)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.equipmentCollection, equipment)
         .then(createEquipmentSuccessHandler, createEquipmentErrorHandler);
   };
 
@@ -73,7 +73,7 @@ angular.module('brew-everywhere').factory('equipmentDataService',function(messag
   messaging.subscribe(events.message._CREATE_EQUIPMENT_, createEquipment);
 
   var updateEquipment = function (equipment) {
-    return mongolab.update('brew_everywhere', 'equipment', equipment)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.equipmentCollection, equipment)
         .then(updateEquipmentSuccessHandler, updateEquipmentErrorHandler);
   };
 
@@ -96,7 +96,7 @@ angular.module('brew-everywhere').factory('equipmentDataService',function(messag
   messaging.subscribe(events.message._UPDATE_EQUIPMENT_, updateEquipment);
 
   var deleteEquipment = function (equipment) {
-    return mongolab.delete('brew_everywhere', 'equipment', equipment)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.equipmentCollection, equipment)
         .then(deleteEquipmentSuccessHandler, deleteEquipmentErrorHandler);
   };
 

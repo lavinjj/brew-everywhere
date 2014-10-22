@@ -1,8 +1,8 @@
-angular.module('brew-everywhere').factory('brewingHistoryDataService',function(messaging, events, mongolab, modelTransformer, Recipe, Fermentable, Hop) {
+angular.module('brew-everywhere').factory('brewingHistoryDataService',function(messaging, events, constants, mongolab, modelTransformer, Recipe, Fermentable, Hop) {
   var history = [];
 
   var getBrewingHistoryByBrewerId = function (brewerId) {
-    return mongolab.query('brew_everywhere', 'brewingHistory', {q: {BrewerId: brewerId}})
+    return mongolab.query(constants.mongodb.database, constants.mongodb.brewingHistoryCollection, {q: {BrewerId: brewerId}})
       .then(getBrewingHistorySuccessHandler, getBrewingHistoryErrorHandler);
   };
 
@@ -32,7 +32,7 @@ angular.module('brew-everywhere').factory('brewingHistoryDataService',function(m
   messaging.subscribe(events.message._GET_HISTORY_, getBrewingHistoryByBrewerId);
 
   var getBrewingHistoryById = function (id) {
-    return mongolab.queryById('brew_everywhere', 'brewingHistory', id, [])
+    return mongolab.queryById(constants.mongodb.database, constants.mongodb.brewingHistoryCollection, id, [])
       .then(getBrewingHistoryByIdSuccessHandler, getBrewingHistoryByIdErrorHandler);
   };
 
@@ -59,7 +59,7 @@ angular.module('brew-everywhere').factory('brewingHistoryDataService',function(m
   messaging.subscribe(events.message._GET_HISTORY_BY_ID_, getBrewingHistoryById);
 
   var createBrewingHistory = function (recipe) {
-    return mongolab.create('brew_everywhere', 'brewingHistory', recipe)
+    return mongolab.create(constants.mongodb.database, constants.mongodb.brewingHistoryCollection, recipe)
       .then(createBrewingHistorySuccessHandler, createBrewingHistoryErrorHandler);
   };
 
@@ -82,7 +82,7 @@ angular.module('brew-everywhere').factory('brewingHistoryDataService',function(m
   messaging.subscribe(events.message._CREATE_HISTORY_, createBrewingHistory);
 
   var updateBrewingHistory = function (recipe) {
-    return mongolab.update('brew_everywhere', 'brewingHistory', recipe)
+    return mongolab.update(constants.mongodb.database, constants.mongodb.brewingHistoryCollection, recipe)
       .then(updateBrewingHistorySuccessHandler, updateBrewingHistoryErrorHandler);
   };
 
@@ -105,7 +105,7 @@ angular.module('brew-everywhere').factory('brewingHistoryDataService',function(m
   messaging.subscribe(events.message._UPDATE_HISTORY_, updateBrewingHistory);
 
   var deleteBrewingHistory = function (recipe) {
-    return mongolab.delete('brew_everywhere', 'brewingHistory', recipe)
+    return mongolab.delete(constants.mongodb.database, constants.mongodb.brewingHistoryCollection, recipe)
       .then(deleteBrewingHistorySuccessHandler, deleteBrewingHistoryErrorHandler);
   };
 
