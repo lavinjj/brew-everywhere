@@ -50,7 +50,7 @@ Ensure you have Node.js installed.
 
 6.	Mongolabs.com Account and Database
 
-    a.	Open a browser and navigate to the mongolabs.com home page at [http://www.monoglabs.com](http://www.monoglabs.com)
+    a.	Open a browser and navigate to the mongolabs.com home page at [http://www.monoglab.com](https://mongolab.com/welcome/)
     
     b.	If you do not already have an account, click on the **Sign Up** button to create an account. Fill out the requested information and click the **Create** button.
     
